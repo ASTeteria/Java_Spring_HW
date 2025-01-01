@@ -18,22 +18,23 @@ public class ReferenceDataController {
 
     private final FuelConfig fuelConfig;
 
-    // GET /engine-types
+    // engine-types
     @GetMapping("/engine-types")
     public List<String> getEngineTypes() {
         return engineTypes;
     }
 
-    // GET /fuel-types
+    // fuel-types
     @GetMapping("/fuel-types")
     public Map<String, List<String>> getFuelTypes() {
         return fuelConfig.getFuelTypes();
     }
 
-    // GET /fuel-types/{fuelName}
+    // fuel-types/{fuelName}
     @GetMapping("/fuel-types/{fuelName}")
     public Map<String, Object> getFuelTypeDetails(@PathVariable String fuelName) {
         Map<String, List<String>> fuelTypes = fuelConfig.getFuelTypes();
+
         if (!fuelTypes.containsKey(fuelName)) {
             throw new IllegalArgumentException("Тип палива " + fuelName + " не знайдено.");
         }
