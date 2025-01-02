@@ -31,17 +31,14 @@ public class ReferenceDataController {
     }
 
     // fuel-types/{fuelName}
+
     @GetMapping("/fuel-types/{fuelName}")
-    public Map<String, Object> getFuelTypeDetails(@PathVariable String fuelName) {
-        Map<String, List<String>> fuelTypes = fuelConfig.getFuelTypes();
-
-        if (!fuelTypes.containsKey(fuelName)) {
-            throw new IllegalArgumentException("Тип палива " + fuelName + " не знайдено.");
+    public Map<String, List<String>> getFuelTypeByName(@PathVariable String fuelName) {
+        List<String> options = fuelConfig.getFuelTypes().get(fuelName);
+        if (options == null) {
+            throw new IllegalArgumentException("Тип палива не знайдено: " + fuelName);
         }
-
-        return Map.of(
-                "name", fuelName,
-                "options", fuelTypes.get(fuelName)
-        );
+        return Map.of(fuelName, options);
     }
+
 }
